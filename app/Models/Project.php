@@ -30,4 +30,3 @@ class Project extends Model
         return $this->hasOne(Remark::class);
     }
 }
-

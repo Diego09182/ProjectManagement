@@ -8,13 +8,12 @@ use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
-
     public function index()
     {
         $projects = Project::paginate(6);
 
         return Inertia::render('Projects/Index', [
-            'projects' => $projects
+            'projects' => $projects,
         ]);
     }
 
@@ -49,14 +48,14 @@ class ProjectController extends Controller
             'title.string' => '標題必須為文字格式。',
             'title.max' => '標題不得超過 10 個字元。',
             'label.string' => '標籤必須為文字格式。',
-            'label.max' => '標籤不得超過 5 個字元。',  
+            'label.max' => '標籤不得超過 5 個字元。',
             'importance.required' => '重要性為必填項目。',
             'importance.integer' => '重要性必須為數字。',
             'importance.min' => '重要性不得小於 1。',
-            'importance.max' => '重要性不得大於 5。',        
-            'content.string' => '內容必須為文字格式。',            
+            'importance.max' => '重要性不得大於 5。',
+            'content.string' => '內容必須為文字格式。',
             'status.required' => '狀態為必填項目。',
-            'status.boolean' => '狀態必須為布林值 (true 或 false)。',           
+            'status.boolean' => '狀態必須為布林值 (true 或 false)。',
             'progress.required' => '進度為必填項目。',
             'progress.integer' => '進度必須為數字。',
             'progress.min' => '進度不得小於 0。',
@@ -65,12 +64,12 @@ class ProjectController extends Controller
             'finish_time.date' => '結束時間必須為有效日期格式。',
             'finish_time.after_or_equal' => '結束時間必須大於或等於開始時間。',
         ]);
-        
+
         Project::create($validated);
 
         return redirect()->route('projects.index');
     }
-    
+
     public function edit(Project $project)
     {
         return Inertia::render('Projects/Edit', ['project' => $project]);
@@ -103,7 +102,7 @@ class ProjectController extends Controller
         $status = $validated['progress'] == 100 ? 1 : 0;
 
         $validated['status'] = $status;
-        
+
         $project->update($validated);
 
         return redirect()->route('projects.index');
@@ -129,7 +128,7 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
-        
+
         return redirect()->route('projects.index');
     }
 }

@@ -9,21 +9,20 @@ use Inertia\Inertia;
 
 class TaskController extends Controller
 {
-
     public function index(Project $project)
     {
         $tasks = $project->tasks()->paginate(6);
-        
+
         return Inertia::render('Tasks/Index', [
             'project' => $project,
-            'tasks' => $tasks
+            'tasks' => $tasks,
         ]);
     }
 
     public function create(Project $project)
     {
         return Inertia::render('Tasks/Create', [
-            'project' => $project
+            'project' => $project,
         ]);
     }
 
@@ -50,7 +49,7 @@ class TaskController extends Controller
     {
         return Inertia::render('Tasks/Show', [
             'project' => $project,
-            'task' => $task
+            'task' => $task,
         ]);
     }
 
@@ -69,10 +68,10 @@ class TaskController extends Controller
             'content' => 'nullable|string',
             'status' => 'boolean',
         ]);
-    
+
         $task->update($validated);
-    
-        return redirect()->route('projects.show', $project)->with('success', 'Task updated successfully.');
+
+        return redirect()->route('projects.show', $project);
     }
 
     public function complete(Request $request, Project $project, Task $task)
@@ -89,7 +88,7 @@ class TaskController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->back()->with('success', '任務狀態已更新');
+        return redirect()->back();
     }
 
     public function destroy(Project $project, Task $task)
