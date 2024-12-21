@@ -45,14 +45,6 @@ class TaskController extends Controller
         return redirect()->route('projects.show', $project);
     }
 
-    public function show(Project $project, Task $task)
-    {
-        return Inertia::render('Tasks/Show', [
-            'project' => $project,
-            'task' => $task,
-        ]);
-    }
-
     public function edit(Project $project, Task $task)
     {
         return Inertia::render('Tasks/Edit', [
@@ -64,9 +56,15 @@ class TaskController extends Controller
     public function update(Request $request, Project $project, Task $task)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:10',
             'content' => 'nullable|string',
             'status' => 'boolean',
+        ], [
+            'title.required' => '標題是必填的。',
+            'title.string' => '標題必須是字串。',
+            'title.max' => '標題不能超過 :max 個字。',
+            'content.string' => '內容必須是字串。',
+            'status.boolean' => '狀態必須是布林值。',
         ]);
 
         $task->update($validated);

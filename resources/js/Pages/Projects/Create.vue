@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <Header />
 
     <Banner />
@@ -49,14 +50,6 @@
         </div>
 
         <div class="mb-3">
-          <label for="progress" class="form-label">進度</label>
-          <input id="progress" v-model="form.progress" type="number" class="form-control" />
-          <div v-if="form.errors.progress" class="text-danger">
-            {{ form.errors.progress }}
-          </div>
-        </div>
-
-        <div class="mb-3">
           <label for="start_time" class="form-label">開始時間</label>
           <input id="start_time" v-model="form.start_time" type="datetime-local" class="form-control" />
           <div v-if="form.errors.start_time" class="text-danger">
@@ -80,6 +73,7 @@
     </div>
 
     <Footer />
+    
   </div>
 </template>
 
@@ -95,17 +89,12 @@ export default {
       importance: 1,
       content: '',
       status: false,
-      progress: 0,
       start_time: '',
       finish_time: '',
     })
 
     function submit() {
-      form.post(route('projects.store'), {
-        onError: () => {
-          console.error('表單驗證錯誤', form.errors)
-        },
-      })
+      form.post(route('projects.store'))
     }
 
     return { form, submit }

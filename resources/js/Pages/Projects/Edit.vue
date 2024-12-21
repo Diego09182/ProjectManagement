@@ -1,4 +1,5 @@
 <template>
+
   <Header />
 
   <Banner />
@@ -91,6 +92,7 @@
   </div>
 
   <Footer />
+  
 </template>
 
 <script>

@@ -29,4 +29,9 @@ class Project extends Model
     {
         return $this->hasOne(Remark::class);
     }
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
 }

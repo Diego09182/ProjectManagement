@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,8 @@ Route::get('projects/{project}/tasks/{task}/edit', [TaskController::class, 'edit
 Route::put('projects/{project}/tasks/{task}', [TaskController::class, 'update'])->name('projects.tasks.update');
 Route::delete('projects/{project}/tasks/{task}', [TaskController::class, 'destroy'])->name('projects.tasks.destroy');
 Route::put('/projects/{project}/tasks/{task}/complete', [TaskController::class, 'complete'])->name('projects.tasks.complete');
+
+Route::get('files/{file}/download', [FileController::class, 'download'])->name('files.download');
+Route::get('/projects/{project}/files/create', [FileController::class, 'create'])->name('files.create');
+Route::post('projects/{project}/files', [FileController::class, 'store'])->name('files.store');
+Route::delete('files/{file}', [FileController::class, 'destroy'])->name('files.destroy');

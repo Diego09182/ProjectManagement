@@ -1,4 +1,5 @@
 <template>
+  
   <Header />
 
   <Banner />
@@ -10,7 +11,7 @@
     <br>
     <div class="row">
       <div class="col-md-4 mb-4" v-for="project in projects.data" :key="project.id">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
               <h4 class="card-title m-0">{{ project.title }}</h4>

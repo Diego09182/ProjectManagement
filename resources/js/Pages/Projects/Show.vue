@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <Header />
 
     <Banner />
@@ -36,6 +35,27 @@
           <div class="d-flex justify-content-between">
             <button @click="updateProject" class="btn btn-dark mt-3">更新專案</button>
             <Link :href="route('projects.edit', { project: project.id })" class="btn btn-dark mt-3 me-2">編輯</Link>
+          </div>
+        </div>
+      </div>
+      
+      <Link 
+        :href="route('files.create', { project: project.id})" 
+        class="btn btn-dark me-2 mt-3">
+        上傳檔案
+      </Link>
+
+      <div class="mt-4">
+        <h2>檔案列表</h2>
+        <div class="list-group">
+          <div class="list-group-item" v-for="file in files" :key="file.id">
+            <div class="d-flex justify-content-between align-items-center">
+              <span>{{ file.name }}</span>
+              <div>
+                <a :href="route('files.download', { file: file.id })" class="btn btn-sm btn-info me-2">下載</a>
+                <button @click="deleteFile(file.id)" class="btn btn-sm btn-danger">刪除</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -116,8 +136,8 @@
     <Footer />
 
   </div>
+  
 </template>
-
 <script>
 import { Link } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
@@ -129,6 +149,7 @@ export default {
   props: {
     project: Object,
     tasks: Object,
+    files: Object,
   },
   data() {
     return {
@@ -162,6 +183,13 @@ export default {
       this.$inertia.delete(route('projects.tasks.destroy', { 
         project: this.project.id,
         task: taskId
+      }));
+    },
+
+    deleteFile(fileId) {
+      this.$inertia.delete(route('files.destroy', { 
+        project: this.project.id,
+        file: fileId
       }));
     },
 

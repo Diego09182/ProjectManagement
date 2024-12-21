@@ -21,9 +21,12 @@ class ProjectController extends Controller
     {
         $tasks = $project->tasks()->paginate(6);
 
+        $files = $project->files()->take(5)->get();
+
         return Inertia::render('Projects/Show', [
             'project' => $project,
             'tasks' => $tasks,
+            'files' => $files,
         ]);
     }
 
@@ -40,7 +43,6 @@ class ProjectController extends Controller
             'importance' => 'required|integer|min:1|max:5',
             'content' => 'nullable|string',
             'status' => 'required|boolean',
-            'progress' => 'required|integer|min:0|max:100',
             'start_time' => 'nullable|date',
             'finish_time' => 'nullable|date|after_or_equal:start_time',
         ], [
@@ -56,10 +58,6 @@ class ProjectController extends Controller
             'content.string' => '內容必須為文字格式。',
             'status.required' => '狀態為必填項目。',
             'status.boolean' => '狀態必須為布林值 (true 或 false)。',
-            'progress.required' => '進度為必填項目。',
-            'progress.integer' => '進度必須為數字。',
-            'progress.min' => '進度不得小於 0。',
-            'progress.max' => '進度不得大於 100。',
             'start_time.date' => '開始時間必須為有效日期格式。',
             'finish_time.date' => '結束時間必須為有效日期格式。',
             'finish_time.after_or_equal' => '結束時間必須大於或等於開始時間。',
@@ -110,10 +108,20 @@ class ProjectController extends Controller
 
     public function complete(Request $request, Project $project)
     {
-        $request->validate([
-            'status' => 'required|boolean',
-            'progress' => 'required|numeric|min:0|max:100',
-        ]);
+        $request->validate(
+            [
+                'status' => 'required|boolean',
+                'progress' => 'required|numeric|min:0|max:100',
+            ],
+            [
+                'status.required' => '狀態是必填的。',
+                'status.boolean' => '狀態必須是布林值。',
+                'progress.required' => '進度是必填的。',
+                'progress.numeric' => '進度必須是數值。',
+                'progress.min' => '進度不得小於 :min。',
+                'progress.max' => '進度不得大於 :max。',
+            ]
+        );
 
         $status = $request->progress == 100 ? 1 : 0;
 
