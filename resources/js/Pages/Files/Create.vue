@@ -27,25 +27,6 @@
         </div>
       </form>
 
-      <div class="mt-4">
-        <h2>檔案列表</h2>
-        <div class="list-group">
-          <div class="list-group-item" v-for="file in project.files" :key="file.id">
-            <div class="d-flex justify-content-between align-items-center">
-              <span>{{ file.name }}</span>
-              <div>
-                <a :href="route('files.download', { file: file.id })" class="btn btn-sm btn-info me-2">下載</a>
-                <button 
-                  @click="deleteFile(file.id)" 
-                  class="btn btn-sm btn-danger">
-                  刪除
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
 
     <Footer />
@@ -54,45 +35,44 @@
 </template>
 
 <script>
-import { useForm } from '@inertiajs/vue3'
-import { route } from 'ziggy-js'
+import { useForm } from '@inertiajs/vue3';
+import { route } from 'ziggy-js';
 
 export default {
   props: {
     project: Object,
   },
-  setup(props) {
-    
-    const form = useForm({
-      files: null,
-      project_id: props.project.id,
-    })
-
-    function handleFileUpload(event) {
-      form.files = event.target.files;
-    }
-
-    function submit() {
+  data() {
+    return {
+      form: useForm({
+        files: null,
+        project_id: this.project.id,
+      }),
+    };
+  },
+  methods: {
+    handleFileUpload(event) {
+      this.form.files = event.target.files;
+    },
+    submit() {
       const formData = new FormData();
 
-      if (form.files) {
-        for (let i = 0; i < form.files.length; i++) {
-          formData.append('files[]', form.files[i]);
+      if (this.form.files) {
+        for (let i = 0; i < this.form.files.length; i++) {
+          formData.append('files[]', this.form.files[i]);
         }
       }
 
-      formData.append('project_id', form.project_id);
+      formData.append('project_id', this.form.project_id);
 
-      form.post(route('files.store', { project: form.project_id }), {
+      this.form.post(route('files.store', { project: this.form.project_id }), {
         data: formData,
-        onFinish: () => form.reset(),
+        onFinish: () => this.form.reset(),
         preserveScroll: true,
       });
-    }
-
-    return { form, submit, handleFileUpload }
+    },
   },
-}
+};
 </script>
 
 <style scoped>

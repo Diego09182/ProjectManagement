@@ -64,7 +64,7 @@ class ProjectController extends Controller
         ]);
 
         Project::create($validated);
-
+        
         return redirect()->route('projects.index');
     }
 

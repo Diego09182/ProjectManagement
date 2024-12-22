@@ -78,31 +78,31 @@
 </template>
 
 <script>
-import { useForm } from '@inertiajs/vue3'
-import { route } from 'ziggy-js'
+import { useForm } from '@inertiajs/vue3';
+import { route } from 'ziggy-js';
 
 export default {
-  setup() {
-    const form = useForm({
-      title: '',
-      label: '',
-      importance: 1,
-      content: '',
-      status: false,
-      start_time: '',
-      finish_time: '',
-    })
-
-    function submit() {
-      form.post(route('projects.store'))
-    }
-
-    return { form, submit }
+  data() {
+    return {
+      form: useForm({
+        title: '',
+        label: '',
+        importance: 1,
+        content: '',
+        status: false,
+        start_time: '',
+        finish_time: '',
+      }),
+    };
   },
-}
+  methods: {
+    submit() {
+      this.form.post(route('projects.store'));
+    },
+  },
+};
 </script>
-
-<style>
+<style scoped>
 .text-danger {
   color: red;
   font-size: 0.875rem;

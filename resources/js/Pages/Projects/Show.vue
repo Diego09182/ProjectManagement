@@ -22,7 +22,7 @@
             {{ project.status ? '已完成' : '未完成' }}
           </span>
           <div class="mt-3">
-            <label for="progress" class="form-label"><strong>更新進度:</strong></label>
+            <label for="progress" class="form-label"><strong>進度調整:</strong></label>
             <input 
               type="range" 
               id="progress" 
@@ -33,7 +33,7 @@
             />
           </div>
           <div class="d-flex justify-content-between">
-            <button @click="updateProject" class="btn btn-dark mt-3">更新專案</button>
+            <button @click="updateProject" class="btn btn-dark mt-3">更新進度</button>
             <Link :href="route('projects.edit', { project: project.id })" class="btn btn-dark mt-3 me-2">編輯</Link>
           </div>
         </div>
@@ -60,14 +60,16 @@
         </div>
       </div>
 
-      <Link 
-        :href="route('projects.tasks.create', { project: project.id})" 
-        class="btn btn-dark me-2">
-        創建任務
-      </Link>
+      <div class="mt-4">
+        <Link 
+          :href="route('projects.tasks.create', { project: project.id})" 
+          class="btn btn-dark me-2">
+          創建任務
+        </Link>
+      </div>
 
       <div class="mt-4">
-        <h2>任務列表</h2>
+        <h2><b>任務列表</b></h2>
         <div class="row">
           <div class="col-md-6 col-lg-4 mb-4" v-for="task in tasks.data" :key="task.id">
             <div class="card h-100 shadow-sm">
@@ -157,14 +159,12 @@ export default {
     };
   },
   methods: {
-
     updateProject() {
       this.$inertia.put(route('projects.complete', { project: this.project.id }), {
         progress: this.projectProgress,
         status: this.project.status
       });
     },
-
     complete(task) {
       const newStatus = !task.status;
       this.$inertia.put(route('projects.tasks.complete', {
@@ -178,21 +178,18 @@ export default {
         }
       });
     },
-
     deleteTask(taskId) {
       this.$inertia.delete(route('projects.tasks.destroy', { 
         project: this.project.id,
         task: taskId
       }));
     },
-
     deleteFile(fileId) {
       this.$inertia.delete(route('files.destroy', { 
         project: this.project.id,
         file: fileId
       }));
     },
-
     getPage(url) {
       if (url) {
         this.$inertia.get(url);

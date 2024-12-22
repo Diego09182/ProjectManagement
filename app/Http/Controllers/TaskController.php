@@ -9,16 +9,6 @@ use Inertia\Inertia;
 
 class TaskController extends Controller
 {
-    public function index(Project $project)
-    {
-        $tasks = $project->tasks()->paginate(6);
-
-        return Inertia::render('Tasks/Index', [
-            'project' => $project,
-            'tasks' => $tasks,
-        ]);
-    }
-
     public function create(Project $project)
     {
         return Inertia::render('Tasks/Create', [

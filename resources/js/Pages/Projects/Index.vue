@@ -72,11 +72,9 @@
   <Footer />
   
 </template>
-
 <script>
-import { Link } from '@inertiajs/vue3'
-import { useForm } from '@inertiajs/vue3'
-import { route } from 'ziggy-js'
+import { Link } from '@inertiajs/vue3';
+import { route } from 'ziggy-js';
 
 export default {
   components: {
@@ -85,20 +83,15 @@ export default {
   props: {
     projects: Object,
   },
-  setup() {
-    const form = useForm({})
-
-    function deleteProject(id) {
-      form.delete(route('projects.destroy', { project: id }))
-    }
-
-    function getPage(url) {
+  methods: {
+    deleteProject(id) {
+      this.form.delete(route('projects.destroy', { project: id }));
+    },
+    getPage(url) {
       if (url) {
-        window.location.href = url
+        this.$inertia.get(url);
       }
-    }
-
-    return { form, deleteProject, route, getPage }
+    },
   },
-}
+};
 </script>

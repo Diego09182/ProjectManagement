@@ -11,8 +11,8 @@ class FileController extends Controller
 {
     public function download(File $file)
     {
-        if (! Storage::disk('public')->exists($file->path)) {
-            return redirect()->route('files.index')->with('error', '檔案不存在或已被刪除。');
+        if (!Storage::disk('public')->exists($file->path)) {
+            return redirect()->back()->with('error', '檔案不存在或已被刪除。');
         }
 
         return Storage::disk('public')->download($file->path, basename($file->path));
@@ -58,6 +58,12 @@ class FileController extends Controller
                 'project_id' => $project->id,
             ]);
         }
+        else
+        {
+            return redirect()->back()->withErrors([
+                'files' => '請選擇要上傳的檔案。',
+            ])->withInput();
+        }
 
         return redirect()->route('projects.show', $project)->with('success', '檔案上傳成功');
     }
@@ -66,6 +72,6 @@ class FileController extends Controller
     {
         $file->delete();
 
-        return redirect()->route('projects.index')->with('success', '檔案刪除成功');
+        return redirect()->back()->with('success', '檔案刪除成功');
     }
 }

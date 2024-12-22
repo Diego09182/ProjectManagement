@@ -57,9 +57,9 @@
 </template>
 
 <script>
-import { useForm } from '@inertiajs/vue3'
-import { route } from 'ziggy-js'
-import { Link } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
+import { route } from 'ziggy-js';
 
 export default {
   components: {
@@ -69,21 +69,22 @@ export default {
     project: Object,
     task: Object,
   },
-  setup(props) {
-    const form = useForm({
-      title: props.task.title,
-      content: props.task.content,
-      status: Boolean(props.task.status),
-    });
-
-    function submit() {
-      form.put(route('projects.tasks.update', {
-        project: props.project.id,
-        task: props.task.id,
-      }));
-    }
-
-    return { form, submit };
+  data() {
+    return {
+      form: useForm({
+        title:    this.task.title,
+        content:  this.task.content,
+        status:   Boolean(this.task.status),
+      }),
+    };
   },
-}
+  methods: {
+    submit() {
+      this.form.put(route('projects.tasks.update', {
+        project: this.project.id,
+        task: this.task.id,
+      }));
+    },
+  },
+};
 </script>

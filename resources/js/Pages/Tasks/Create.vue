@@ -49,7 +49,7 @@
 
       <div class="card-footer d-flex justify-content-between">
         <button type="submit" class="btn btn-dark">創建任務</button>
-        <Link 
+        <Link
           :href="route('projects.show', { project: project.id })" 
           class="btn btn-secondary">
           回到首頁
@@ -64,9 +64,9 @@
 </template>
 
 <script>
-import { useForm } from '@inertiajs/vue3'
-import { Link } from '@inertiajs/vue3'
-import { route } from 'ziggy-js'
+import { Link } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
+import { route } from 'ziggy-js';
 
 export default {
   components: {
@@ -75,18 +75,19 @@ export default {
   props: {
     project: Object,
   },
-  setup(props) {
-    const form = useForm({
-      title: '',
-      content: '',
-      status: false,
-    })
-
-    function submit() {
-      form.post(route('projects.tasks.store', { project: props.project.id }))
-    }
-
-    return { form, submit }
+  data() {
+    return {
+      form: useForm({
+        title: '',
+        content: '',
+        status: false,
+      }),
+    };
   },
-}
+  methods: {
+    submit() {
+      this.form.post(route('projects.tasks.store', { project: this.project.id }));
+    },
+  },
+};
 </script>

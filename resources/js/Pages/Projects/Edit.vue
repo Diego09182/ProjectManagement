@@ -44,7 +44,7 @@
       <div class="mb-3">
         <label for="content" class="form-label">內容</label>
         <textarea 
-          id="content" 
+          id="content"
           v-model="form.content" 
           class="form-control" 
           rows="4" 
@@ -96,31 +96,37 @@
 </template>
 
 <script>
-import { useForm } from '@inertiajs/vue3'
-import { route } from 'ziggy-js'
+import { useForm } from '@inertiajs/vue3';
+import { route } from 'ziggy-js';
 
 export default {
   props: {
-    project: Object, 
+    project: Object,
   },
-  setup(props) {
-
-    const form = useForm({
-      title: props.project.title,
-      label: props.project.label,
-      importance: props.project.importance,
-      content: props.project.content,
-      progress: props.project.progress,
-      start_time: props.project.start_time,
-      finish_time: props.project.finish_time,
-    })
-
-    function submit() {
-      form.put(route('projects.update', { project: props.project.id }))
-    }
-
-    return { form, submit }
+  data() {
+    return {
+      form: useForm({
+        title: this.project.title,
+        label: this.project.label,
+        importance: this.project.importance,
+        content: this.project.content,
+        progress: this.project.progress,
+        start_time: this.project.start_time,
+        finish_time: this.project.finish_time,
+      }),
+    };
   },
-}
+  methods: {
+    submit() {
+      this.form.put(route('projects.update', { project: this.project.id }));
+    },
+  },
+};
 </script>
-
+<style scoped>
+.text-danger {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+</style>
