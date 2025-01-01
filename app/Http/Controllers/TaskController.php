@@ -79,7 +79,7 @@ class TaskController extends Controller
         return redirect()->back();
     }
 
-    public function destroy(Project $project, Task $task)
+    public function destroy(Task $task)
     {
         $task->delete();
 
