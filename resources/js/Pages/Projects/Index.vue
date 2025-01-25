@@ -85,7 +85,9 @@ export default {
   },
   methods: {
     deleteProject(id) {
-      this.form.delete(route('projects.destroy', { project: id }));
+      if (confirm('確定要刪除這個專案嗎?')) {
+        this.$inertia.delete(route('projects.destroy', { project: id }));
+      }
     },
     getPage(url) {
       if (url) {

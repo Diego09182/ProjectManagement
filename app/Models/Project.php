@@ -25,11 +25,6 @@ class Project extends Model
         return $this->hasMany(Task::class);
     }
 
-    public function remark()
-    {
-        return $this->hasOne(Remark::class);
-    }
-
     public function files()
     {
         return $this->hasMany(File::class);

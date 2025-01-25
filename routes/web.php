@@ -25,10 +25,10 @@ Route::post('projects/{project}/tasks', [TaskController::class, 'store'])->name(
 Route::get('projects/{project}/tasks/{task}', [TaskController::class, 'show'])->name('projects.tasks.show');
 Route::get('projects/{project}/tasks/{task}/edit', [TaskController::class, 'edit'])->name('projects.tasks.edit');
 Route::put('projects/{project}/tasks/{task}', [TaskController::class, 'update'])->name('projects.tasks.update');
-Route::delete('projects/{project}/tasks/{task}', [TaskController::class, 'destroy'])->name('projects.tasks.destroy');
+Route::delete('projects//tasks/{task}', [TaskController::class, 'destroy'])->name('projects.tasks.destroy');
 Route::put('/projects/{project}/tasks/{task}/complete', [TaskController::class, 'complete'])->name('projects.tasks.complete');
 
-Route::get('files/{file}/download', [FileController::class, 'download'])->name('files.download');
+Route::get('/projects/files/{file}/download', [FileController::class, 'download'])->name('files.download');
 Route::get('/projects/{project}/files/create', [FileController::class, 'create'])->name('files.create');
 Route::post('projects/{project}/files', [FileController::class, 'store'])->name('files.store');
-Route::delete('files/{file}', [FileController::class, 'destroy'])->name('files.destroy');
+Route::delete('/projects/files/{file}', [FileController::class, 'destroy'])->name('files.destroy');

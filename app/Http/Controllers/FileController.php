@@ -44,7 +44,7 @@ class FileController extends Controller
 
             if ($existingFileCount >= 5) {
                 return redirect()->back()->withErrors([
-                    'files' => "此專案最多只能有 5 個檔案，目前已有 {$existingFileCount} 檔案。",
+                    'files' => "此專案最多只能有 5 個檔案，目前已有 {$existingFileCount} 個檔案。",
                 ])->withInput();
             }
 
@@ -65,13 +65,13 @@ class FileController extends Controller
             ])->withInput();
         }
 
-        return redirect()->route('projects.show', $project)->with('success', '檔案上傳成功');
+        return redirect()->route('projects.show', $project);
     }
 
     public function destroy(File $file)
     {
         $file->delete();
 
-        return redirect()->back()->with('success', '檔案刪除成功');
+        return redirect()->back();
     }
 }
