@@ -56,7 +56,7 @@ class TaskController extends Controller
             'content.string' => '內容必須是字串。',
             'status.boolean' => '狀態必須是布林值。',
         ]);
-
+        
         $task->update($validated);
 
         return redirect()->route('projects.show', $project);
@@ -82,7 +82,7 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
-
+        
         return redirect()->back();
     }
 }

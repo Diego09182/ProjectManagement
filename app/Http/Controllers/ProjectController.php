@@ -101,9 +101,9 @@ class ProjectController extends Controller
 
         $validated['status'] = $status;
 
-        $project->update($validated);
+        $project->update($validated);   
 
-        return redirect()->route('projects.index');
+        return redirect()->route('projects.index'); 
     }
 
     public function complete(Request $request, Project $project)
@@ -129,7 +129,7 @@ class ProjectController extends Controller
             'status' => $status,
             'progress' => $request->progress,
         ]);
-
+        
         return redirect()->back();
     }
 
